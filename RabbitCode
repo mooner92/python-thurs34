@@ -5,15 +5,16 @@ if A_S==0 and B_S==0 and R_S==0:
 elif(A_S==0 and B_S==0):
     print("두 사람 모두 속도가 0이라면 토끼를 잡을 수 없습니다.")  #예외처리 2
 #elif(A_S!=0 and B_S!=0 and R_S==0):
+G = False
 MS = 1000   ############시간단위를 바꾸고 싶다면 MS를 조절하면 됨
 A=A_S/MS  #계산에 쓰일 더미값 선언 후 초를 1000으로 나누어 밀리초로 계산해줌(1밀리초에 A가 이동하는 거리)
 B=B_S/MS  # ""
 R=R_S/MS  # ""
 TL=T_L    # T_L도 피봇을 생성
-A_Dis,B_Dis,R_Dis,R_TDis,R_Uturn,Catch_Time = 0,0,1,0,0,0  # A가 간 거리 , B가 간 거리 , 토끼가 뛴 거리 , 유턴의 횟수 , 잡을 때 까지 걸리는 시간
+A_Dis,B_Dis,R_Dis,R_TDis,R_Uturn,Catch_Time = 0,0,0,0,0,0  # A가 간 거리 , B가 간 거리 , 토끼가 뛴 거리 , 유턴의 횟수 , 잡을 때 까지 걸리는 시간
 ################ 처음에 A랑 같은 곳에서 시작하게 하려면 R_Dis만 0로 바꿔주면 됨 ##################
 while(1):  #초를 1000으로 나누어 밀리초로 계산해줌
-    Catch_Time+=(1/MS)  #매 TC마다 0.001초씩 진행함
+    Catch_Time+=(1/MS)  #매 TC마다 1/MS초씩 진행함
     A_Dis += A  # 매 TC마다 A_Dis에 A속력/MS 의 값을 계속 더해줌
     B_Dis += B  # 매 TC마다 B_Dis에 B속력/MS 의 값을 계속 더해줌
     R_Dis += R  # 매 TC마다 R_Dis에 R속력/MS 의 값을 계속 더해줌
@@ -27,6 +28,7 @@ while(1):  #초를 1000으로 나누어 밀리초로 계산해줌
         if s=='N':
             pass
         elif s=='Y':
+            G = True
             break
     if(R_Dis>=(TL-B_Dis)): #Uturn하는 case 닿는 경우에도 유턴해줘야함  ------ 정확히 닿는 케이스가 생기면(B_Dis와 R_Dis의 공배수) MS를 조절하거나 (TL-B_Dis)-(1/MS)로 조금 더 자세한 계산이 가능
         B_Pos = TL-B_Dis  # 위치 변경의 pivot이 될 B의 위치를 저장해줌(계산용)
@@ -38,6 +40,8 @@ while(1):  #초를 1000으로 나누어 밀리초로 계산해줌
         B = tmp         # ""
         B_Dis = 0         # B_Dis를 초기값으로 돌려줌
         A_Dis = 0         # A_Dis도 초기값으로 돌려줌 이후로는 새로운 TL에 대한 계산 시작
-
-print("토끼를 잡는데 걸린 시간 = {0:.3f}초\n토끼가 유턴한 횟수 = {1}회\n토끼가 달린 총 거리 = {2:.3f}m\n".format(Catch_Time,R_Uturn,R_TDis))
-##소수점 4째자리까지 리턴함----------밀리초 단위가 1/1000이므로 소수점 셋째자리까지만 출력해줌
+if(G==True):
+    print("토끼가 지쳤습니다. 달린 거리 = {0}".format(T_L))
+else:
+    print("토끼를 잡는데 걸린 시간 = {0:.3f}초\n토끼가 유턴한 횟수 = {1}회\n토끼가 달린 총 거리 = {2:.3f}m\n".format(Catch_Time,R_Uturn,R_TDis))
+    ##소수점 4째자리까지 리턴함----------밀리초 단위가 1/1000이므로 소수점 셋째자리까지만 출력해줌
