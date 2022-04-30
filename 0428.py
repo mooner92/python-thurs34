@@ -37,6 +37,7 @@ print("최종승자는 %s 가 %d회 승리하여 우승!"%())
 """
 
 Score = [0, 0, 0]
+print("점수는 공백으로 구분하여 입력하시면 됩니다. ex:) 111 222 333 ")
 for i in range(10):
     A, B, C = map(int, input().split())
     if A>999 or B>999 or C>999:  #Exeption1
@@ -47,7 +48,7 @@ for i in range(10):
     for j in range(3):
         Pivot[0] += A % 10  #일,십,백의 자리수를 뽑아냄
         A /= 10  #10으로 나눈 값을 저장해줌
-        Pivot[1] += B % 10  
+        Pivot[1] += B % 10
         B /= 10
         Pivot[2] += C % 10
         C /= 10
@@ -76,7 +77,6 @@ if Repo1[1]==Repo1[2]:
 else:
     for i in range(3):
         if Repo1[2] == Score[i]:
-            print("승자 %s가 %d회 승리하여 우승!"%(chr(i+63),Score[i] ))
+            print("승자 %s가 %d회 승리하여 우승!"%(chr(i+65),Score[i] ))
             #for문과 일정한 숫자를 더해 chr함수를 사용하여 아스키파싱을 통해 비교해주었다.
-
 
